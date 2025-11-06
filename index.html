@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Interview Preparation Tool</title>
     <style>
         * {
@@ -11,11 +11,26 @@
             box-sizing: border-box;
         }
 
+        /* Mobile touch optimization */
+        @media (hover: none) and (pointer: coarse) {
+            button, .question-item, .concept-btn, .nav-btn, .category-chip {
+                -webkit-tap-highlight-color: rgba(0, 120, 212, 0.2);
+                touch-action: manipulation;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
             min-height: 100vh;
             padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
@@ -28,7 +43,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -64,12 +79,12 @@
 
         .header-nav-btn:hover {
             background: white;
-            color: #667eea;
+            color: #0078D4;
         }
 
         .header-nav-btn.active {
             background: white;
-            color: #667eea;
+            color: #0078D4;
         }
 
         .main-content {
@@ -78,20 +93,7 @@
         }
 
         .sidebar {
-            width: 300px;
-            background: #f8f9fa;
-            border-right: 2px solid #e9ecef;
-            padding: 20px;
-            overflow-y: auto;
-            max-height: 600px;
-            transition: all 0.3s;
-        }
-
-        .sidebar.hidden {
-            width: 0;
-            padding: 0;
-            overflow: hidden;
-            border-right: none;
+            display: none;
         }
 
         .category-filter {
@@ -114,12 +116,12 @@
 
         .category-chip {
             background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 6px 12px;
-            border-radius: 20px;
+            color: #0078D4;
+            border: 2px solid #0078D4;
+            padding: 5px 10px;
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 0.85em;
+            font-size: 0.8em;
             transition: all 0.3s;
             font-weight: 500;
         }
@@ -129,7 +131,7 @@
         }
 
         .category-chip.active {
-            background: #667eea;
+            background: #0078D4;
             color: white;
         }
 
@@ -144,7 +146,7 @@
         }
 
         .question-counter strong {
-            color: #667eea;
+            color: #0078D4;
             font-size: 1.2em;
         }
 
@@ -166,7 +168,7 @@
         }
 
         .question-number {
-            background: #667eea;
+            background: #0078D4;
             color: white;
             min-width: 30px;
             height: 30px;
@@ -187,7 +189,7 @@
 
         .question-category-tag {
             font-size: 0.75em;
-            color: #667eea;
+            color: #0078D4;
             opacity: 0.7;
             margin-top: 4px;
         }
@@ -199,13 +201,13 @@
         }
 
         .question-item.active {
-            background: #667eea;
+            background: #0078D4;
             color: white;
-            border-left-color: #764ba2;
+            border-left-color: #005A9E;
         }
 
         .question-item.active .question-number {
-            background: #764ba2;
+            background: #005A9E;
         }
 
         .question-item.active .question-category-tag {
@@ -222,7 +224,7 @@
 
         .practice-mini-badge {
             background: #e7e9ff;
-            color: #667eea;
+            color: #0078D4;
             padding: 2px 8px;
             border-radius: 10px;
             font-weight: 600;
@@ -243,35 +245,6 @@
             color: white;
         }
 
-        .sidebar-toggle {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #667eea;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            z-index: 100;
-            transition: all 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-        }
-
-        .sidebar-toggle.visible {
-            display: flex;
-        }
-
-        .sidebar-toggle:hover {
-            background: #5568d3;
-            transform: translateY(-50%) scale(1.1);
-        }
 
         .content-area {
             flex: 1;
@@ -292,7 +265,7 @@
 
         .question-category-badge {
             display: inline-block;
-            background: #667eea;
+            background: #0078D4;
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
@@ -332,7 +305,7 @@
         }
 
         .toggle-btn {
-            background: #667eea;
+            background: #0078D4;
             color: white;
             border: none;
             padding: 8px 15px;
@@ -343,7 +316,7 @@
         }
 
         .toggle-btn:hover {
-            background: #5568d3;
+            background: #005A9E;
             transform: scale(1.05);
         }
 
@@ -361,7 +334,7 @@
 
         .counter-value {
             font-weight: bold;
-            color: #667eea;
+            color: #0078D4;
             min-width: 20px;
             text-align: center;
             font-size: 0.9em;
@@ -432,7 +405,7 @@
         }
 
         .concept-btn {
-            background: #764ba2;
+            background: #005A9E;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -450,16 +423,18 @@
 
         .navigation {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 15px;
             margin-top: 40px;
             padding-top: 20px;
             border-top: 2px solid #e9ecef;
         }
 
         .nav-btn {
-            background: #667eea;
+            background: #0078D4;
             color: white;
             border: none;
+            min-width: 150px;
             padding: 12px 30px;
             border-radius: 8px;
             cursor: pointer;
@@ -471,9 +446,9 @@
         }
 
         .nav-btn:hover:not(:disabled) {
-            background: #5568d3;
+            background: #005A9E;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 120, 212, 0.4);
         }
 
         .nav-btn:disabled {
@@ -502,26 +477,40 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             animation: slideIn 0.3s;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .navigation-modal-content.modal-content {
+            padding: 15px;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
             border-bottom: 2px solid #e9ecef;
         }
 
+        .navigation-modal-content .modal-header {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .navigation-modal-content .modal-header h2 {
+            font-size: 1.2em;
+        }
+
         .modal-header h2 {
-            color: #764ba2;
+            color: #005A9E;
         }
 
         .close-btn {
@@ -573,6 +562,130 @@
             display: block;
         }
 
+        /* Navigator View Styles */
+        .navigator-filters {
+            margin-bottom: 15px;
+        }
+
+        .navigator-filters .category-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .navigator-search {
+            margin-bottom: 15px;
+        }
+
+        .navigator-search input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .navigator-search input:focus {
+            outline: none;
+            border-color: #0078D4;
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+        }
+
+        .navigator-counter {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .navigator-questions {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigator-question-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navigator-question-item:hover {
+            background: #f8f9fa;
+            padding-left: 25px;
+        }
+
+        .navigator-question-item:last-child {
+            border-bottom: none;
+        }
+
+        .navigator-question-item.active {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            border-left: 4px solid #005A9E;
+        }
+
+        .navigator-question-item.active .navigator-question-category {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .navigator-question-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .navigator-question-number {
+            background: #0078D4;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+
+        .navigator-question-item.active .navigator-question-number {
+            background: white;
+            color: #0078D4;
+        }
+
+        .navigator-question-text {
+            flex: 1;
+        }
+
+        .navigator-question-text .question-title-text {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .navigator-question-category {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .navigator-practice-badges {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
         .overview-stats {
             background: #f8f9fa;
             padding: 20px;
@@ -587,7 +700,7 @@
             background: white;
             padding: 15px 20px;
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0078D4;
             flex: 1;
             min-width: 150px;
         }
@@ -601,7 +714,7 @@
         .stat-card .stat-value {
             font-size: 2em;
             font-weight: bold;
-            color: #667eea;
+            color: #0078D4;
         }
 
         .overview-table {
@@ -616,7 +729,7 @@
         }
 
         .overview-category-header {
-            background: #667eea;
+            background: #0078D4;
             color: white;
             padding: 15px 20px;
             font-weight: bold;
@@ -656,7 +769,7 @@
 
         .practice-badge {
             background: #e7e9ff;
-            color: #667eea;
+            color: #0078D4;
             padding: 5px 12px;
             border-radius: 15px;
             font-weight: bold;
@@ -679,18 +792,224 @@
             color: #28a745;
         }
 
+        /* Category Statistics Grid */
+        .category-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .category-stat-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .category-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 120, 212, 0.2);
+        }
+
+        .category-stat-header {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-stat-header h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .category-stat-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .category-stat-body {
+            padding: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .stat-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .stat-value-large {
+            color: #0078D4;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+
+        /* Navigation Modal Styles */
+        .navigation-modal-content {
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+        }
+
+        .nav-modal-filter {
+            margin-bottom: 8px;
+        }
+
+        .nav-modal-filter .category-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .nav-modal-search {
+            margin-bottom: 8px;
+        }
+
+        .nav-modal-search input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .nav-modal-search input:focus {
+            outline: none;
+            border-color: #0078D4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
+        }
+
+        .nav-modal-counter {
+            background: #f8f9fa;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .nav-modal-questions {
+            max-height: 550px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-modal-question-item {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-modal-question-item:hover {
+            background: #f8f9fa;
+            padding-left: 14px;
+        }
+
+        .nav-modal-question-item.active {
+            background: linear-gradient(135deg, #0078D4 0%, #005A9E 100%);
+            color: white;
+            border-left: 4px solid #005A9E;
+        }
+
+        .nav-modal-question-item.active .nav-modal-question-category {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-modal-question-text {
+            flex: 1;
+            font-size: 0.9em;
+            line-height: 1.25;
+        }
+
+        .nav-modal-question-number {
+            background: #0078D4;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.75em;
+            flex-shrink: 0;
+        }
+
+        .nav-modal-question-item.active .nav-modal-question-number {
+            background: white;
+            color: #0078D4;
+        }
+
+        .nav-modal-question-category {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 1px;
+            line-height: 1.1;
+        }
+
+        .nav-modal-practice-badges {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
-                padding: 0;
+                padding: 10px;
             }
 
             .container {
-                border-radius: 0;
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 20px 15px;
             }
 
             .header h1 {
-                font-size: 1.5em;
+                font-size: 1.6em;
+                margin-bottom: 8px;
             }
 
             .header p {
@@ -698,129 +1017,407 @@
             }
 
             .header-nav {
-                flex-wrap: wrap;
+                flex-direction: row;
+                gap: 6px;
+                width: 100%;
+                justify-content: center;
             }
 
             .header-nav-btn {
-                padding: 8px 15px;
-                font-size: 0.9em;
+                flex: 1;
+                padding: 8px 10px;
+                font-size: 0.85em;
+                white-space: nowrap;
             }
 
             .main-content {
-                flex-direction: column;
+                min-height: auto;
             }
 
-            .sidebar {
-                width: 100%;
-                max-height: 400px;
-                border-right: none;
-                border-bottom: 2px solid #e9ecef;
-            }
-
-            .sidebar.hidden {
-                max-height: 0;
-                padding: 0;
-            }
-
-            .sidebar-toggle {
-                left: 10px;
-                top: auto;
-                bottom: 20px;
-                transform: none;
-            }
-
-            .sidebar-toggle:hover {
-                transform: scale(1.1);
-            }
 
             .content-area {
-                padding: 15px;
+                padding: 20px 15px;
                 max-height: none;
             }
 
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
             .question-title {
-                font-size: 1.3em;
+                font-size: 1.2em;
+                line-height: 1.4;
+            }
+
+            .category-badge {
+                font-size: 0.8em;
+                padding: 5px 12px;
+            }
+
+            .answer-section {
+                margin-bottom: 20px;
             }
 
             .answer-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 12px;
+                padding: 15px;
+            }
+
+            .answer-header h3 {
+                font-size: 1.1em;
             }
 
             .answer-controls {
                 width: 100%;
                 justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .counter {
+                font-size: 0.9em;
+            }
+
+            .answer-content {
+                padding: 15px;
+            }
+
+            .answer-content p {
+                font-size: 0.95em;
+                line-height: 1.8;
+            }
+
+            .answer-content ul li {
+                font-size: 0.95em;
+                margin-bottom: 10px;
+            }
+
+            .key-concepts {
+                padding: 15px;
+            }
+
+            .key-concepts h3 {
+                font-size: 1.1em;
             }
 
             .concept-buttons {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .concept-btn {
                 width: 100%;
+                padding: 12px;
+                font-size: 0.95em;
             }
 
             .navigation {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 10px;
+                margin-top: 30px;
+                padding-top: 15px;
             }
 
             .nav-btn {
-                width: 100%;
-                justify-content: center;
+                flex: 1;
+                padding: 12px 20px;
+                font-size: 0.95em;
+                min-width: auto;
             }
 
+            /* Modal Styles for Mobile */
             .modal-content {
-                margin: 20px;
-                max-width: calc(100% - 40px);
+                margin: 10px;
+                max-width: calc(100% - 20px);
                 padding: 20px;
+                max-height: 90vh;
+            }
+
+            .modal-header h2 {
+                font-size: 1.3em;
+            }
+
+            .modal-body {
+                font-size: 0.95em;
+            }
+
+            .close-btn {
+                font-size: 2em;
+            }
+
+            /* Navigation Modal Mobile */
+            .navigation-modal-content {
+                width: 95%;
+                max-height: 90vh;
+                padding: 12px;
+            }
+
+            .navigation-modal-content .modal-header {
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+
+            .navigation-modal-content .modal-header h2 {
+                font-size: 1.1em;
+            }
+
+            .nav-modal-filter {
+                margin-bottom: 8px;
+            }
+
+            .nav-modal-filter .category-chips {
+                gap: 5px;
+            }
+
+            .category-chip {
+                font-size: 0.75em;
+                padding: 4px 8px;
+            }
+
+            .nav-modal-search {
+                margin-bottom: 8px;
+            }
+
+            .nav-modal-search input {
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+
+            .nav-modal-counter {
+                padding: 5px 10px;
+                margin-bottom: 8px;
+                font-size: 0.8em;
+            }
+
+            .nav-modal-questions {
+                max-height: 55vh;
+            }
+
+            .nav-modal-question-item {
+                padding: 8px 10px;
+                flex-wrap: wrap;
+            }
+
+            .nav-modal-question-number {
+                width: 24px;
+                height: 24px;
+                font-size: 0.75em;
+            }
+
+            .nav-modal-question-text {
+                font-size: 0.88em;
+                line-height: 1.3;
+            }
+
+            .nav-modal-question-category {
+                font-size: 0.7em;
+                margin-top: 1px;
+            }
+
+            .nav-modal-practice-badges {
+                width: 100%;
+                justify-content: flex-end;
+                margin-top: 6px;
+            }
+
+            .practice-mini-badge {
+                font-size: 0.7em;
+                padding: 2px 6px;
+            }
+
+            /* Practice Overview Mobile */
+            .practice-overview .content-area {
+                padding: 15px;
+            }
+
+            .practice-overview h2 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
             }
 
             .overview-stats {
                 flex-direction: column;
+                gap: 15px;
+                padding: 15px;
             }
 
             .stat-card {
                 min-width: 100%;
+                padding: 12px 15px;
             }
 
-            .overview-question {
+            .stat-card h4 {
+                font-size: 0.9em;
+            }
+
+            .stat-card .stat-value {
+                font-size: 1.8em;
+            }
+
+            /* Category Stats Grid Mobile */
+            .category-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .category-stat-card {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .category-stat-header {
+                padding: 15px;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 8px;
             }
 
-            .overview-practice-count {
-                width: 100%;
-                justify-content: space-between;
+            .category-stat-header h3 {
+                font-size: 1.1em;
+            }
+
+            .category-stat-badge {
+                font-size: 0.8em;
+                padding: 4px 10px;
+            }
+
+            .category-stat-body {
+                padding: 15px;
+            }
+
+            .stat-row {
+                margin-bottom: 10px;
+            }
+
+            .stat-label {
+                font-size: 0.9em;
+            }
+
+            .stat-value {
+                font-size: 0.9em;
+            }
+
+            .stat-value-large {
+                font-size: 1.8em;
+            }
+
+            .progress-bar {
+                height: 10px;
+                margin: 12px 0;
             }
         }
 
+        /* Extra Small Devices */
         @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .header {
+                padding: 15px 10px;
+            }
+
             .header h1 {
-                font-size: 1.2em;
+                font-size: 1.4em;
             }
 
             .header p {
                 font-size: 0.85em;
             }
 
-            .sidebar {
-                padding: 10px;
+            .header-nav {
+                gap: 4px;
+            }
+
+            .header-nav-btn {
+                padding: 6px 8px;
+                font-size: 0.8em;
             }
 
             .content-area {
-                padding: 10px;
+                padding: 15px 10px;
+            }
+
+            .question-title {
+                font-size: 1.1em;
+            }
+
+            .answer-header {
+                padding: 12px;
             }
 
             .answer-header h3 {
                 font-size: 1em;
             }
 
-            .toggle-btn {
-                padding: 6px 12px;
-                font-size: 0.85em;
+            .answer-content {
+                padding: 12px;
+            }
+
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+
+            .modal-content {
+                margin: 5px;
+                max-width: calc(100% - 10px);
+                padding: 15px;
+            }
+
+            .navigation-modal-content {
+                width: 98%;
+                padding: 8px;
+            }
+
+            .navigation-modal-content .modal-header {
+                margin-bottom: 8px;
+                padding-bottom: 6px;
+            }
+
+            .navigation-modal-content .modal-header h2 {
+                font-size: 1em;
+            }
+
+            .nav-modal-filter {
+                margin-bottom: 6px;
+            }
+
+            .nav-modal-search {
+                margin-bottom: 6px;
+            }
+
+            .nav-modal-counter {
+                padding: 4px 8px;
+                margin-bottom: 6px;
+                font-size: 0.75em;
+            }
+
+            .nav-modal-question-item {
+                padding: 6px 8px;
+            }
+
+            .nav-modal-question-number {
+                width: 22px;
+                height: 22px;
+                font-size: 0.7em;
+            }
+
+            .category-chip {
+                font-size: 0.75em;
+                padding: 4px 8px;
+            }
+
+            .category-stat-header h3 {
+                font-size: 1em;
+            }
+
+            .stat-value-large {
+                font-size: 1.6em;
             }
         }
     </style>
@@ -832,13 +1429,12 @@
             <p>Master your interview with structured practice and key concepts</p>
             <div class="header-nav">
                 <button class="header-nav-btn active" onclick="switchView('questions')">📚 Questions</button>
-                <button class="header-nav-btn" onclick="switchView('overview')">📊 Practice Overview</button>
+                <button class="header-nav-btn" onclick="switchView('navigator')">🗂️ Navigator</button>
+                <button class="header-nav-btn" onclick="switchView('overview')">📊 Overview</button>
             </div>
         </div>
 
         <div class="main-content" id="questionsView">
-            <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
-            
             <div class="sidebar" id="sidebar">
                 <div style="padding: 20px; color: #666;">Loading questions...</div>
             </div>
@@ -868,6 +1464,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="practice-overview" id="navigatorView">
+            <div class="content-area">
+                <h2 style="margin-bottom: 15px; color: #333;">🗂️ Question Navigator</h2>
+                
+                <div class="navigator-filters">
+                    <div class="category-chips" id="navigatorCategoryChips">
+                        <!-- Category filters will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="navigator-search">
+                    <input type="text" id="navigatorSearchInput" placeholder="🔍 Search questions..." onkeyup="filterNavigatorQuestions()">
+                </div>
+
+                <div class="navigator-counter" id="navigatorCounter">
+                    <!-- Counter will be loaded here -->
+                </div>
+
+                <div class="navigator-questions" id="navigatorQuestions">
+                    <!-- Questions will be loaded here -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal for Key Concepts -->
@@ -882,6 +1502,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         // JSON Data
@@ -3814,19 +4435,28 @@
         // Switch between views
         function switchView(view) {
             const questionsView = document.getElementById('questionsView');
+            const navigatorView = document.getElementById('navigatorView');
             const overviewView = document.getElementById('overviewView');
             const navButtons = document.querySelectorAll('.header-nav-btn');
 
+            // Hide all views
+            questionsView.style.display = 'none';
+            navigatorView.classList.remove('active');
+            overviewView.classList.remove('active');
+            
+            // Remove active from all buttons
+            navButtons.forEach(btn => btn.classList.remove('active'));
+
             if (view === 'questions') {
                 questionsView.style.display = 'flex';
-                overviewView.classList.remove('active');
                 navButtons[0].classList.add('active');
-                navButtons[1].classList.remove('active');
-            } else {
-                questionsView.style.display = 'none';
-                overviewView.classList.add('active');
-                navButtons[0].classList.remove('active');
+            } else if (view === 'navigator') {
+                navigatorView.classList.add('active');
                 navButtons[1].classList.add('active');
+                renderNavigator();
+            } else if (view === 'overview') {
+                overviewView.classList.add('active');
+                navButtons[2].classList.add('active');
                 renderPracticeOverview();
             }
         }
@@ -3883,45 +4513,66 @@
             `;
         }
 
-        // Render overview table
+        // Render overview table with category statistics
         function renderOverviewTable() {
             const overviewContent = document.getElementById('overviewContent');
-            let html = '';
+            let html = '<div class="category-stats-grid">';
 
             interviewData.categories.forEach(category => {
-                html += `
-                    <div class="overview-category">
-                        <div class="overview-table">
-                            <div class="overview-category-header">${category.name}</div>
-                `;
+                let totalQuestions = category.questions.length;
+                let practiceCount = 0;
+                let coveredQuestions = 0;
+                let notCoveredQuestions = 0;
 
                 category.questions.forEach(question => {
                     const suggestedCount = getCounter(question.id, 'suggested');
                     const bulletCount = getCounter(question.id, 'bullet');
                     const totalCount = suggestedCount + bulletCount;
                     
-                    let badgeClass = '';
-                    if (totalCount === 0) badgeClass = 'low';
-                    else if (totalCount < 5) badgeClass = 'medium';
-                    else badgeClass = 'high';
-
-                    html += `
-                        <div class="overview-question" onclick="navigateToQuestion(${category.id}, ${question.id})">
-                            <div class="overview-question-text">${question.question}</div>
-                            <div class="overview-practice-count">
-                                <span>Suggested: <span class="practice-badge ${badgeClass}">${suggestedCount}x</span></span>
-                                <span>Bullet: <span class="practice-badge ${badgeClass}">${bulletCount}x</span></span>
-                            </div>
-                        </div>
-                    `;
+                    practiceCount += totalCount;
+                    
+                    if (totalCount > 0) {
+                        coveredQuestions++;
+                    } else {
+                        notCoveredQuestions++;
+                    }
                 });
 
+                const coveragePercent = Math.round((coveredQuestions / totalQuestions) * 100);
+                const progressBarColor = coveragePercent >= 75 ? '#28a745' : coveragePercent >= 50 ? '#ffc107' : coveragePercent >= 25 ? '#fd7e14' : '#dc3545';
+
                 html += `
+                    <div class="category-stat-card">
+                        <div class="category-stat-header">
+                            <h3>${category.name}</h3>
+                            <div class="category-stat-badge">${totalQuestions} Questions</div>
+                        </div>
+                        <div class="category-stat-body">
+                            <div class="stat-row">
+                                <span class="stat-label">Coverage:</span>
+                                <span class="stat-value-large">${coveragePercent}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${coveragePercent}%; background: ${progressBarColor};"></div>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">✅ Covered:</span>
+                                <span class="stat-value">${coveredQuestions} questions</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">⏳ Not Covered:</span>
+                                <span class="stat-value">${notCoveredQuestions} questions</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">🔄 Total Practice:</span>
+                                <span class="stat-value">${practiceCount} sessions</span>
+                            </div>
                         </div>
                     </div>
                 `;
             });
 
+            html += '</div>';
             overviewContent.innerHTML = html;
         }
 
@@ -3929,6 +4580,104 @@
         function navigateToQuestion(categoryId, questionId) {
             switchView('questions');
             loadQuestion(categoryId, questionId);
+        }
+
+        // Navigator View Functions
+        let navigatorCategoryFilter = 'all';
+        let navigatorSearchTerm = '';
+
+        function renderNavigator() {
+            renderNavigatorCategoryChips();
+            renderNavigatorQuestions();
+        }
+
+        function renderNavigatorCategoryChips() {
+            const container = document.getElementById('navigatorCategoryChips');
+            let html = `
+                <div class="category-chip ${navigatorCategoryFilter === 'all' ? 'active' : ''}" 
+                     onclick="filterNavigatorByCategory('all')">
+                    All
+                </div>
+            `;
+            
+            interviewData.categories.forEach(category => {
+                html += `
+                    <div class="category-chip ${navigatorCategoryFilter === category.id ? 'active' : ''}" 
+                         onclick="filterNavigatorByCategory(${category.id})">
+                        ${category.name}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function filterNavigatorByCategory(categoryId) {
+            navigatorCategoryFilter = categoryId;
+            renderNavigator();
+        }
+
+        function filterNavigatorQuestions() {
+            navigatorSearchTerm = document.getElementById('navigatorSearchInput').value.toLowerCase();
+            renderNavigatorQuestions();
+        }
+
+        function getFilteredNavigatorQuestions() {
+            let filtered = allQuestions;
+            
+            // Filter by category
+            if (navigatorCategoryFilter !== 'all') {
+                filtered = filtered.filter(q => q.categoryId === navigatorCategoryFilter);
+            }
+            
+            // Filter by search term
+            if (navigatorSearchTerm) {
+                filtered = filtered.filter(q => 
+                    q.question.toLowerCase().includes(navigatorSearchTerm) ||
+                    q.categoryName.toLowerCase().includes(navigatorSearchTerm)
+                );
+            }
+            
+            return filtered;
+        }
+
+        function renderNavigatorQuestions() {
+            const container = document.getElementById('navigatorQuestions');
+            const counter = document.getElementById('navigatorCounter');
+            const filteredQuestions = getFilteredNavigatorQuestions();
+            
+            counter.innerHTML = `Showing <strong>${filteredQuestions.length}</strong> of <strong>${allQuestions.length}</strong> questions`;
+            
+            let html = '';
+            filteredQuestions.forEach(question => {
+                const isActive = question.id === currentQuestionId;
+                const suggestedCount = getCounter(question.id, 'suggested');
+                const bulletCount = getCounter(question.id, 'bullet');
+                
+                html += `
+                    <div class="navigator-question-item ${isActive ? 'active' : ''}" 
+                         onclick="selectQuestionFromNavigator(${question.categoryId}, ${question.id})">
+                        <div class="navigator-question-left">
+                            <div class="navigator-question-number">${question.globalIndex}</div>
+                            <div class="navigator-question-text">
+                                <div class="question-title-text">${question.question}</div>
+                                <div class="navigator-question-category">${question.categoryName}</div>
+                            </div>
+                        </div>
+                        <div class="navigator-practice-badges">
+                            <span class="practice-mini-badge ${suggestedCount === 0 ? 'zero' : ''}">${suggestedCount}</span>
+                            <span class="practice-mini-badge ${bulletCount === 0 ? 'zero' : ''}">${bulletCount}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function selectQuestionFromNavigator(categoryId, questionId) {
+            loadQuestion(categoryId, questionId);
+            switchView('questions');
         }
 
         // Render sidebar with category filters and all questions
@@ -4014,9 +4763,29 @@
             }
         }
 
-        // Load first question on init
+        // Load first question on init (or last opened question from localStorage)
         function loadFirstQuestion() {
             if (allQuestions.length > 0) {
+                // Try to load last opened question from localStorage
+                const lastOpened = localStorage.getItem('lastOpenedQuestion');
+                if (lastOpened) {
+                    try {
+                        const { categoryId, questionId } = JSON.parse(lastOpened);
+                        const questionExists = allQuestions.find(q => q.id === questionId && q.categoryId === categoryId);
+                        if (questionExists) {
+                            loadQuestion(categoryId, questionId);
+                            // Auto-hide sidebar on initial load
+                            if (sidebarVisible) {
+                                toggleSidebar();
+                            }
+                            return;
+                        }
+                    } catch (e) {
+                        console.log('Could not load last opened question');
+                    }
+                }
+                
+                // Fallback to first question
                 const firstQuestion = allQuestions[0];
                 loadQuestion(firstQuestion.categoryId, firstQuestion.id);
                 // Auto-hide sidebar on initial load
@@ -4030,6 +4799,12 @@
         function loadQuestion(categoryId, questionId) {
             currentCategoryId = categoryId;
             currentQuestionId = questionId;
+
+            // Save last opened question to localStorage
+            localStorage.setItem('lastOpenedQuestion', JSON.stringify({
+                categoryId: categoryId,
+                questionId: questionId
+            }));
 
             const category = interviewData.categories.find(c => c.id === categoryId);
             const question = category.questions.find(q => q.id === questionId);
@@ -4166,17 +4941,19 @@
             document.getElementById('conceptTitle').textContent = concept.name;
             document.getElementById('conceptBody').innerHTML = `<p>${concept.explanation || ''}</p>`;
             modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent body scroll on mobile
         }
 
         // Close modal
         function closeModal() {
             document.getElementById('conceptModal').classList.remove('active');
+            document.body.style.overflow = ''; // Restore body scroll
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('conceptModal');
-            if (event.target === modal) {
+            const conceptModal = document.getElementById('conceptModal');
+            if (event.target === conceptModal) {
                 closeModal();
             }
         }
